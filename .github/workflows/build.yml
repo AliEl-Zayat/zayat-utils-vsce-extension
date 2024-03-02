@@ -44,10 +44,11 @@ jobs:
         id: create_release
         uses: actions/create-release@v1
         with:
-          tag_name: v${{ env.PACKAGE_VERSION }}
-          release_name: Release v${{ env.PACKAGE_VERSION }}
+          tag_name: v${{ env.PACKAGE_VERSION }}-${{ github.run_number }}
+          release_name:
+            Release v${{ env.PACKAGE_VERSION }}-${{ github.run_number }}
           body: |
-            Release for version v${{ env.PACKAGE_VERSION }}
+            Release for version v${{ env.PACKAGE_VERSION }}-${{ github.run_number }}
           draft: false
           prerelease: false
         env:
@@ -64,7 +65,9 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: dist/*.vsix
-          asset_name: zayat-utilities-${{ env.PACKAGE_VERSION }}.vsix
+          asset_name:
+            zayat-utilities-${{ env.PACKAGE_VERSION }}-${{ github.run_number
+            }}.vsix
           asset_content_type: application/octet-stream
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
