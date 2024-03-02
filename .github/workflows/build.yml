@@ -30,7 +30,7 @@ jobs:
         run: yarn run compile
 
       - name: Package extension with VSCE
-        run: npx vsce package
+        run: npx vsce package --out dist
         env:
           VSCE_PACKAGE_VERSION: ${{ env.PACKAGE_VERSION }}
 
@@ -38,4 +38,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: zayat-utilities-vsix
-          path: "*.vsix"
+          path: "dist/*.vsix"
