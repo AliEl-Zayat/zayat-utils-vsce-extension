@@ -8,6 +8,10 @@ import {
 	nativeStylesTemplate,
 } from "./nativeComponentTemplate";
 
+/**
+ * This function activates the extension.
+ * @param context - The extension context.
+ */
 export function activate(context: vscode.ExtensionContext) {
 	const folderPath = vscode.workspace.workspaceFolders
 		? vscode.workspace.workspaceFolders[0].uri.fsPath
