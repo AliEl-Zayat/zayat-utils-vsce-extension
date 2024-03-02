@@ -1,5 +1,8 @@
 import fs from "fs/promises";
 
+/**
+ * Utility class for interacting with the file system.
+ */
 export class FileSystemUtils {
     static async createDirectory(directoryPath: string): Promise<void> {
         await fs.mkdir(directoryPath, { recursive: true });
