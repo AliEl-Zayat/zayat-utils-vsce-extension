@@ -1,5 +1,8 @@
 import * as vscode from 'vscode';
 
+/**
+ * Utility class for interacting with the VS Code environment.
+ */
 export class VSCodeUtils {
     static getWorkspaceConfigValue<T>(configName: string, key: string): T | undefined {
         return vscode.workspace.getConfiguration(configName).get<T>(key);
