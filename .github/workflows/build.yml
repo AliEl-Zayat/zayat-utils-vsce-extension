@@ -1,4 +1,4 @@
-name: Generate VSIX Package and Create Release
+name: CI/CD Pipeline
 
 on:
   push:
@@ -16,29 +16,21 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "18"
+          node-version: "20"
 
       - name: Install dependencies
         run: yarn install
 
-      - name: Get package version
-        run:
-          echo "PACKAGE_VERSION=$(node -p "require('./package.json').version")"
-          >> $GITHUB_ENV
+      - name: Run tests
+        run: yarn test
 
-      - name: Compile extension
-        run: yarn run compile
+      - name: Build project
+        run: yarn build
 
       - name: Package extension with VSCE
-        run: npx vsce package --out dist
+        run: npx vsce package
         env:
-          VSCE_PACKAGE_VERSION: ${{ env.PACKAGE_VERSION }}
-
-      - name: Upload VSIX artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: zayat-utilities-vsix
-          path: "dist/*.vsix"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release
         id: create_release
@@ -46,9 +38,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ env.PACKAGE_VERSION }}
-          release_name: Release v${{ env.PACKAGE_VERSION }}
+          tag_name: v1.0.0
+          release_name: Release v1.0.0
           body: |
-            Release for version v${{ env.PACKAGE_VERSION }}
+            Release notes for v1.0.0
           draft: false
           prerelease: false
+
+      - name: Upload VSIX artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: zayat-utilities-vsix
+          path: "*.vsix"
