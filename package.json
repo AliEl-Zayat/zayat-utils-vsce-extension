@@ -3,6 +3,10 @@
 	"displayName": "Zayat Utilities",
 	"description": "a package of used commands",
 	"version": "0.0.1",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/AliEl-Zayat/zayat-utils-vsce-extension/"
+	},
 	"engines": {
 		"vscode": "^1.87.0"
 	},
