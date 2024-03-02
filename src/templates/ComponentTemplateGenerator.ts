@@ -1,6 +1,10 @@
 import { nativeStylesTemplate, nativeIndexTemplate } from '../nativeComponentTemplate';
 
 export class ComponentTemplateGenerator {
+
+/**
+ * This file provides a template generator for native components.
+ */
     private componentName: string;
     private isTS: boolean;
     private isScreen: boolean;
