@@ -1,0 +1,39 @@
+name: Generate VSIX Package
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Get package version
+        run: echo "PACKAGE_VERSION=$(node -p -e \"require('./package.json').version\")" >> $GITHUB_ENV
+
+      - name: Compile extension
+        run: yarn run compile
+
+      - name: Package extension with VSCE
+        run: npx vsce package
+        env:
+          VSCE_PACKAGE_VERSION: ${{ env.PACKAGE_VERSION }}
+
+      - name: Upload VSIX artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: zayat-utilities-vsix
+          path: '*.vsix'
