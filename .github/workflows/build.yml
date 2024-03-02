@@ -1,4 +1,4 @@
-name: Generate VSIX Package
+name: Generate VSIX Package and Create Release
 
 on:
   push:
@@ -39,3 +39,16 @@ jobs:
         with:
           name: zayat-utilities-vsix
           path: "dist/*.vsix"
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ env.PACKAGE_VERSION }}
+          release_name: Release v${{ env.PACKAGE_VERSION }}
+          body: |
+            Release for version v${{ env.PACKAGE_VERSION }}
+          draft: false
+          prerelease: false
