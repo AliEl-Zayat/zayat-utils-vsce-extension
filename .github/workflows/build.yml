@@ -64,7 +64,9 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/*.vsix
+          asset_path:
+            dist/zayat-utilities-${{ env.PACKAGE_VERSION }}-${{
+            github.run_number }}.vsix
           asset_name:
             zayat-utilities-${{ env.PACKAGE_VERSION }}-${{ github.run_number
             }}.vsix
