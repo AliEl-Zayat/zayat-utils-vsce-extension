@@ -59,25 +59,15 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(
 		vscode.commands.registerCommand("zayat-utilities.createScreen", () => {
-			vscode.window
-				.showInputBox({
-					placeHolder: "Enter Screen Name",
-					prompt: "Enter Screen Name",
-					value: "",
-				})
-				.then((value) => action(typeof value === "string" ? value : "", true));
+			VSCodeUtils.showInputBox("Enter Screen Name", "Enter Screen Name", "")
+				.then((value) => action(value, true));
 		})
 	);
 
 	context.subscriptions.push(
 		vscode.commands.registerCommand("zayat-utilities.createComponent", () => {
-			vscode.window
-				.showInputBox({
-					placeHolder: "Enter component Name",
-					prompt: "Enter component Name",
-					value: "",
-				})
-				.then((value) => action(typeof value === "string" ? value : "", false));
+			VSCodeUtils.showInputBox("Enter component Name", "Enter component Name", "")
+				.then((value) => action(value, false));
 		})
 	);
 }
