@@ -8,6 +8,10 @@ import {
 	nativeStylesTemplate,
 } from "./nativeComponentTemplate";
 
+/**
+ * This function activates the extension.
+ * @param context - The extension context.
+ */
 export function activate(context: vscode.ExtensionContext) {
 	const folderPath = vscode.workspace.workspaceFolders
 		? vscode.workspace.workspaceFolders[0].uri.fsPath
@@ -72,6 +76,14 @@ export function activate(context: vscode.ExtensionContext) {
 	);
 }
 
+/**
+ * Create a file in the specified directory with the given name.
+ * @param componentDir - The directory path.
+ * @param componentName - The name of the component.
+ * @param isTS - A boolean indicating if it's a TypeScript file.
+ * @param isScreen - A boolean indicating if it's a screen component.
+ * @param withIndexPattern - A boolean indicating if an index pattern should be created.
+ */
 const createFile = async (
 	componentDir: string,
 	componentName: string,
@@ -81,7 +93,12 @@ const createFile = async (
 ) => {
 	try {
 		const directory = path.join(componentDir, componentName);
-		const directoryToCreate = path.join(directory, `${componentName}`);
+			/**
+	 * Create a directory path by joining the specified directory and component name.
+	 * @param directory - The directory path.
+	 * @param componentName - The name of the component directory.
+	 */
+	const directoryToCreate = path.join(directory, `${componentName}`);
 
 		await fs.mkdir(directory, { recursive: true });
 		if (withIndexPattern) {
@@ -110,5 +127,7 @@ const createFile = async (
 	}
 };
 
-// This method is called when your extension is deactivated
+/**
+ * This method is called when your extension is deactivated.
+ */
 export function deactivate() {}
