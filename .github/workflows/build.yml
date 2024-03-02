@@ -22,15 +22,14 @@ jobs:
         run: yarn install
 
       - name: Get package version
-        run:
-          echo "PACKAGE_VERSION=$(node -p "require('./package.json').version")"
-          >> $GITHUB_ENV
+        run: |
+          echo "PACKAGE_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
 
       - name: Compile extension
         run: yarn run compile
 
       - name: Package extension with VSCE
-        run: npx vsce package --out dist
+        run: npx vsce package --out zayat-utilities.vsix
         env:
           VSCE_PACKAGE_VERSION: ${{ env.PACKAGE_VERSION }}
 
@@ -38,17 +37,16 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: zayat-utilities-vsix
-          path: "dist/*.vsix"
+          path: zayat-utilities.vsix
 
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         with:
-          tag_name: v${{ env.PACKAGE_VERSION }}-${{ github.run_number }}
-          release_name:
-            Release v${{ env.PACKAGE_VERSION }}-${{ github.run_number }}
+          tag_name: v${{ env.PACKAGE_VERSION }}
+          release_name: Release v${{ env.PACKAGE_VERSION }}
           body: |
-            Release for version v${{ env.PACKAGE_VERSION }}-${{ github.run_number }}
+            Release for version v${{ env.PACKAGE_VERSION }}
           draft: false
           prerelease: false
         env:
@@ -64,12 +62,8 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path:
-            dist/zayat-utilities-${{ env.PACKAGE_VERSION }}-${{
-            github.run_number }}.vsix
-          asset_name:
-            zayat-utilities-${{ env.PACKAGE_VERSION }}-${{ github.run_number
-            }}.vsix
+          asset_path: zayat-utilities.vsix
+          asset_name: zayat-utilities-${{ env.PACKAGE_VERSION }}.vsix
           asset_content_type: application/octet-stream
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
