@@ -50,3 +50,19 @@ export default ${this.componentName};
         return nativeIndexTemplate(this.componentName);
     }
 }
+    generateStyles(): string {
+        return nativeStylesTemplate(this.isScreen);
+    }
+
+    generateIndexFileContent(): string {
+        return nativeIndexTemplate(this.componentName);
+    }
+}
+    /**
+     * Generate the content of the index file.
+     * @returns The generated index file content.
+     */
+    generateIndexFileContent(): string {
+        return nativeIndexTemplate(this.componentName);
+    }
+}
